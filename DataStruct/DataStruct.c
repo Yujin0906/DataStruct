@@ -2,6 +2,7 @@
 #include <stdlib.h> // malloc()사용
 
 
+// 연결리스트
 typedef struct node
 {
 	int value; // 노드의 값
@@ -25,7 +26,6 @@ void insert_node_front() { // 노드 맨 앞에 삽입
 	head = newNode; // head에 newNode(새로 생긴 노드)의 주솟값을 부여해야 함
 
 }
-
 void display() { // 순회하면서 출력
 	if (head == NULL) { // 연결리스트가 구성되어 있는지 확인
 		printf("연결리스트가 구성되지 않아 출력x"); // 구성되어 있지 않을때 출력
@@ -57,7 +57,6 @@ void insert_node_rear() { // 노드 맨 뒤 삽입
 	}
 	curNode->next = newNode; // 현재 가리키는 노드의 주솟값을 새로 생성된 newNode에 부여함으로써 노드 맨 뒤 삽입
 }
-
 void remove_all_node() // 전체 노드 삭제
 {
 	node* delNode; // delNode 생성
@@ -69,7 +68,6 @@ void remove_all_node() // 전체 노드 삭제
 		delNode = head; // delNode는 head의 주솟값을 공유(?)
 	}
 }
-
 void remove_node() // 특정 노드 삭제
 {
 	int num; // 삭제할 노드 번호 생성
@@ -101,7 +99,6 @@ void remove_node() // 특정 노드 삭제
 		}
 	}
 }
-
 void insert_node_sort() // 정렬 삽입
 {
 	node* newNode = (node*)malloc(sizeof(node)); // 삽입할 노드 생성
@@ -136,4 +133,95 @@ void insert_node_sort() // 정렬 삽입
 	}
 	// 4. 가장 큰 값 삽임
 	curNode->next = newNode; // 가장 큰 값은 앞에서 이미 비교를 다 했기때문에 현재 방문한 노드의 다음 주솟값은 newNode를 가리키면 됨
+}
+
+// 이중연결리스트(아직x)
+
+// 스택(배열, 연결리스트)
+typedef struct stack // 스택 배열 선언
+{
+	int arr; // 배열 arr
+	int top; // 제일 높은 꼭대기
+	int capacity; // 배열의 최대 크기
+}stack;
+
+void arrstackInit(stack* p, int size) // 배열 스택 초기화
+{
+	p->top = 0; // 맨 꼭대기 = 0
+	p->capacity = size; // 배열의 최대 크기
+	p->arr = (int*)malloc(sizeof(int) * size); // 배열의 최대 크기 동적 할당
+}
+void arrstakcPush(stack* p, int data) // 스택 푸쉬
+{
+	p->arr[p->top] = data; // 배열의 가장 꼭대기에 데이터 추가
+	(p->top)++; // 데이터를 추가한 후 다음 꼭대기로 이동
+}
+void arrstackPop(stack* p) // 스택 팝
+{
+	(p->top)--; // 실제로 제거를 할 수 없으므로 꼭대기를 감소시킴(전에 가리키던 top은 쓰레기값을 가지고 있음)
+}
+void arrDisplay(stack* p) // 스택 출력
+{
+	for (int i = p->top - 1; i >= 0; i--) // LIFO이기 때문에 뒤에서 부터 출력, -1을 하는 이유는 top이 가리키는 곳부터 하면 쓰레기값도 함께 출력됨
+	{
+		printf("%d", p->arr[i]); // arr스택 배열 출력
+	}
+}
+void arrstackClear(stack* p) // 스택 초기화
+{
+	p->top = 0; // 꼭대기 값을 0으로 만들어줌
+}
+
+typedef struct node // 스택 연결리스트 선언
+{
+	int value; // 노드의 값 생성
+	struct node* next; // 노드가 가리키는 주솟값 생성
+}node;
+
+void liststackPush(node** head, int data)  // 스택 푸쉬
+{
+	node* newNode = NULL; // 새로운 노드 생성 후 널값 부여
+	newNode = (node*)malloc(sizeof(node)); // 새로운 노드의 크기를 동적 할당 받음
+	newNode->value = data; // 새로운 노드의 값에 data 추가
+	newNode->next = NULL; // 새로운 노드의 가리키는 주솟값에 NULL값 부여
+
+	if (*head == NULL)  
+	{
+		*head = newNode;
+	}
+	newNode->next = *head;
+	*head = newNode;
+}
+void liststackPop(node** head) // 스택 팝
+{
+	node* delNode = NULL;
+	if (*head == NULL)
+	{
+		return;
+	}
+	delNode = *head;
+	*head = (*head)->next;
+	free(delNode);
+}
+void liststackDisplay(node* head) // 스택 출력
+{
+	node* curNode = head;
+	if (head == NULL)
+	{
+		return;
+	}
+	while (curNode->next)
+	{
+		curNode = curNode->next;
+	}
+}
+void liststackClear(node** head) // 스택 초기화
+{
+	node* delNode = *head;
+	while (*head)
+	{
+		*head = (*head)->next;
+		free(delNode);
+		delNode = (*head);
+	}
 }
