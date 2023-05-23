@@ -40,7 +40,6 @@ void display() { // 순회하면서 출력
 	}
 	printf("%d", curNode->value); // 마지막은 NULL값이 포함되어 있어 출력되지 못했기때문에 마지막 value값 출력
 }
-
 void insert_node_rear() { // 노드 맨 뒤 삽입
 	node* newNode; // newNode 생성
 	newNode = (node*)malloc(sizeof(node)); // newNode의 동적할당(초기화?)
