@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h> // malloc()사용
 
-
+/*
 // 연결리스트
 typedef struct node
 {
@@ -137,7 +137,7 @@ void insert_node_sort() // 정렬 삽입
 
 // 이중연결리스트(아직x)
 
-// 스택(배열, 연결리스트)
+// 스택(배열)
 typedef struct stack // 스택 배열 선언
 {
 	int arr; // 배열 arr
@@ -172,6 +172,7 @@ void arrstackClear(stack* p) // 스택 초기화
 	p->top = 0; // 꼭대기 값을 0으로 만들어줌
 }
 
+// 스택(연결리스트)
 typedef struct node // 스택 연결리스트 선언
 {
 	int value; // 노드의 값 생성
@@ -224,4 +225,329 @@ void liststackClear(node** head) // 스택 초기화
 		free(delNode);
 		delNode = (*head);
 	}
+}
+
+// 큐(배열)
+typedef struct queue
+{
+	int* arr; // 동적 메모리의 주소를 저장하는 포인터
+	int front; // 삭제 위치(배열의 첨자)
+	int rear; // 삽입 위치(배열의 첨자)
+	int count; // 저장된 원소의 개수
+	int capacity; // 배열의 최대 용량
+}queue;
+
+void arrqueueInit(queue* pQue, int size) {
+	pQue->arr = (int*)malloc(sizeof(int) * size);
+	pQue->front = pQue->rear = pQue->count = 0;
+	pQue->capacity = size;
+}
+
+void arrenqueue(queue* pQue, int data) {
+	if (pQue->count >= pQue->capacity)
+	{
+		printf("queue overflow\n");
+		return;
+	}
+	pQue->arr[pQue->rear] = data;
+	pQue->rear++;
+	pQue->count++;
+	if (pQue->rear == pQue->capacity)
+	{
+		pQue->rear = 0;
+	}
+}
+
+int arrdequeue(queue* pQue) {
+	int delValue;
+	if (pQue->count <= 0) // underflow
+	{
+		return -999999999;
+	}
+	delValue = pQue->arr[pQue->front];
+	pQue->front++;
+	pQue->count--;
+	if (pQue->front == pQue->capacity)
+	{
+		pQue->front = 0;
+	}
+	return delValue; // 삭제된 값 리턴
+}
+
+void arrdisplayqueue(queue* pQue) {
+	int i;
+	system("cls");
+	printf("queue display : ");
+	if (pQue->count <= 0)
+	{
+		printf("queue가 비어있는 상태입니다.");
+		return;
+	}
+	for (i = pQue->front; i < (pQue->front + pQue->count); i++)
+	{
+		printf("%d ", pQue->arr[i % pQue->capacity]);
+	}
+	puts("");
+}
+
+void arrclearqueue(queue* pQue) {
+	pQue->front = pQue->rear = pQue->count = 0;
+}
+
+// 큐(연결리스트)
+void listenqueue(node** pHead, node** pTail, int data)
+{
+	node* newNode;
+	newNode = (node*)malloc(sizeof(node));
+	newNode->value = data;
+	newNode->next = NULL;
+
+	if (*pHead == NULL)
+	{
+		*pHead = newNode;
+		*pTail = newNode;
+		return;
+	}
+	(*pTail)->next = newNode;
+	(*pTail) = newNode;
+}
+
+void listdequeue(node** pHead, node** pTail) {
+	int delValue;
+	node* delNode;
+	if (*pHead == NULL)
+	{
+		return -999999999;
+	}
+	delNode = *pHead;
+	delValue = delNode->value;
+	*pHead = (*pHead)->next;
+	free(delNode);
+	if (*pHead == NULL)
+	{
+		*pTail = NULL;
+	}
+	return delValue;
+}
+
+void listdisplayqueue(node* head, node* tail)
+{
+	node* curNode;
+	if (head == NULL)
+	{
+		return;
+	}
+	curNode = head;
+	while (curNode != NULL)
+	{
+		printf("%d", curNode->value);
+		curNode = curNode->next;
+	}
+	printf("%d", curNode->value);
+}
+
+void listclearqueue(node** pHead, node** pTail)
+{
+	node* delNode;
+	if (*pHead == NULL)
+	{
+		return;
+	}
+	while (*pHead != NULL)
+	{
+		delNode = *pHead;
+		(*pHead) = (*pHead)->next;
+		free(delNode);
+	}
+	(*pTail) = NULL;	
+}
+*/
+
+// 재귀함수
+void reculsive(int n)
+{
+	if (n == 0)
+		return;
+	printf("%d\n", n);
+	printf("%d\n", n);
+	reculsive(n - 1);
+}
+
+// 구구단 재귀함수
+void multitable(int num)
+{
+	if (num == 0)
+	{
+		printf("함수종료\n");
+		return;
+	}
+	multitable(num - 1);
+	printf("2 * %d = %d\n", num, 2 * num);
+}
+
+// 거듭제곱
+double power(int x, int y)
+{
+	if (y == 0)
+		return 1;
+	else
+	{
+		if (y % 2 == 0)
+			return power(x * x, y / 2);
+		else
+			return x * power(x * x, y / 2);
+	}
+}
+
+// 팩토리얼
+double factorial(int n)
+{
+	if (n <= 1)
+	{
+		printf("%d = ", n);
+		return 1;
+	}
+	printf("%d * ", n);
+	return n * factorial(n - 1);
+}
+
+// 유클리드 호제법
+int gcd(int x, int y)
+{
+	if (y == 0)
+		return x;
+	else
+		return gcd(y, x % y);
+}
+
+// 이진 검색
+int binarySearch(int* arr, int left, int right, int target)
+{
+	int mid = (left + right) / 2;
+
+	if (left > right)
+		return 1;
+	if (arr[mid] == target)
+		return mid;
+	if (arr[mid] < target)
+		return binarySearch(arr, mid + 1, right, target);
+	else
+		return binarySearch(arr, left, mid - 1, target);
+}
+
+// 하노이 탑
+void hanoi(int n, char from, char temp, char to)
+{
+	if (n == 1)
+	{
+		printf("%c -> %c로 이동", from, to);
+		return;
+	}
+	hanoi(n - 1, from, to, temp);
+	printf("%c -> %c로 이동", from, to);
+	hanoi(n - 1, temp, from, to);
+}
+
+// 피보나치 수열
+double fibo(int n)
+{
+	if (n == 1 || n == 2) // 종료 조건
+		return 1;
+	else
+		return fibo(n - 1) + fibo(n - 2);
+}
+
+// 피보나치 수열(동적 계획법, top-down)
+double mz[100] = { 0,1,1 }; // 메모이제이션 배열을 0으로 초기화
+double fibo2(int n)
+{
+	if (mz[n] != 0)
+	{
+		return mz[n];
+	}
+	else
+	{
+		mz[n] = fibo2(n - 1) + fibo2(n - 2);
+		return mz[n];
+	}
+}
+
+// 피보나치 수열(동적 계획법, bottom-up)
+double mz[100] = { 0,1,1 };
+double fibo3(int n)
+{
+	int i;
+	for (i = 3; i <= n; i++)
+		mz[i] = mz[i - 1] + mz[i - 2];
+	return mz[n];
+}
+
+int main()
+{/*
+	reculsive(3); // 재귀함수
+
+	multitable(9); // 구구단 재귀함수
+
+	int base, exponent; // 거듭제곱
+	printf("밑수 입력 : ");
+	scanf_s("%d", &base);
+
+	printf("지수 입력 : ");
+	scanf_s("%d", &exponent);
+
+	printf("%d^%d = %0.2f\n", base, exponent, power(base, exponent));
+
+	int num; // 팩토리얼
+	double result;
+
+	printf("자연수 입력 : ");
+	scanf_s("%d", &num);
+
+	printf("%d! = ", num);
+	result = factorial(num);
+	printf("%f\n", result);
+
+	int n1, n2, result; // 유클리드 호제법
+	printf("최대 공약수를 구할 정수 2개 입력 : ");
+	scanf_s("%d %d", &n1, &n2);
+
+	result = gcd(n1, n2);
+
+	printf("%d와 %d의 최대 공약수는 %d입니다.\n", n1, n2, result);
+
+	int arr[10] = { 1,2,3,4,5,6,7,8,9,10 }; // 이진 검색
+	int index;
+
+	index = binarySearch(arr, 0, 9, 9);
+
+	if (index == -1)
+		printf("찾는 값은 존재하지 않습니다.\n");
+	else
+		printf("찾는 값은 arr[%d]번째 있습니다.\n", index);
+
+	hanoi(3, 'A', 'B', 'C'); // 하노이 탑
+
+	int num; // 피보나치 수열
+	double result;
+
+	printf("피보나치 수열의 몇 번째 항을 구하시겠습니까?");
+	scanf_s("%d", &num);
+
+	result = fibo(num);
+
+	printf("%d항의 값은 %0.f입니다.\n", num, result);
+
+	int num; // 피보나치 수열(동적 계획법, top-down)
+	printf("피보나치 수열의 몇 번째 항을 구하시겠습니까?");
+	scanf_s("%d", &num);
+
+	printf("%d항의 값은 %0.f입니다.\n", num, fibo2(num));*/
+
+	int num; // 피보나치 수열(동적 계획법, bottom-up)
+	printf("피보나치 수열의 몇 번째 항을 구하시겠습니까?");
+	scanf_s("%d", &num);
+
+	printf("%d항의 값은 %0.f입니다.\n", num, fibo3(num));
+
+	return 0;
 }
