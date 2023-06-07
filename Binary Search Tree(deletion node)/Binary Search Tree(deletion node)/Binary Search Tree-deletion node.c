@@ -4,6 +4,7 @@
   2. 자식 노드가 1개인 경우
   3. 자식 노드가 2개인 경우
 */
+#include <stdio.h>
 
 typedef struct tree
 {
