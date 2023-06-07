@@ -5,7 +5,7 @@ typedef struct tree
 {
 	int value;
 	struct tree* left;
-	struct tree* right;
+	struct tree* right; 
 }tree;
 
 tree* findMax(tree* t) // 반복문을 사용
