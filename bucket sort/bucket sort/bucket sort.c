@@ -36,7 +36,7 @@ void bucket_sort(int* arr, int size, int range)
 {
 	int i, j, index;
 	int* bucket = (int*)calloc(range, sizeof(int));
-	
+
 	for (i = 0; i < size; i++)
 	{
 		bucket[arr[i]]++;
