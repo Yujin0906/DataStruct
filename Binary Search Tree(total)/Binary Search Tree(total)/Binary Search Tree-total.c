@@ -19,7 +19,7 @@ tree* addNode(tree* t, int data) // 노드 추가
 	}
 	else if (data < t->value)
 		t->left = addNode(t->left, data);
-	else if (data > t->value)
+	else if (data > t->value) 
 		t->right = addNode(t->right, data);
 
 	return t;
