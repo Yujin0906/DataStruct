@@ -107,6 +107,8 @@ int heapRemove(heap* p) // 힙 삭제
 	p->arr[0] = p->arr[p->size - 1]; // arr[0]에 배열의 가장 마지막 인덱스 값을 저장함
 	p->size--; // p의 힙을 감소 시켜줌(마지막 인덱스는 이제 사용x)
 
+	shiftDown(p->arr, 0, p->size);
+
 	return maxValue;
 }
 
