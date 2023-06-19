@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Graph-adjacency_matrix.cpp">
+    <ClCompile Include="Graph-adjacency_matrix.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
